@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 3.4.3)
 
+# Try enable for YCM
+set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "No build type selected, default to Debug")
   set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type (default Debug)")
@@ -199,6 +201,8 @@ set(LLVM_TOOLS_INSTALL_DIR "bin" CACHE STRING "Path for binary subdirectory (def
 mark_as_advanced(LLVM_TOOLS_INSTALL_DIR)
 
 # They are used as destination of target generators.
+# dont need this for Ninja build
+#set(CMAKE_CFG_INTDIR "Debug")
 set(LLVM_RUNTIME_OUTPUT_INTDIR ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/bin)
 set(LLVM_LIBRARY_OUTPUT_INTDIR ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/lib${LLVM_LIBDIR_SUFFIX})
 if(WIN32 OR CYGWIN)
