@@ -199,6 +199,8 @@ set(LLVM_TOOLS_INSTALL_DIR "bin" CACHE STRING "Path for binary subdirectory (def
 mark_as_advanced(LLVM_TOOLS_INSTALL_DIR)
 
 # They are used as destination of target generators.
+# dont need this for Ninja build
+#set(CMAKE_CFG_INTDIR "Debug")
 set(LLVM_RUNTIME_OUTPUT_INTDIR ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/bin)
 set(LLVM_LIBRARY_OUTPUT_INTDIR ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/lib${LLVM_LIBDIR_SUFFIX})
 if(WIN32 OR CYGWIN)
