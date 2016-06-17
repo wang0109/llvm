@@ -752,7 +752,7 @@ void X86AddressSanitizer32::InstrumentMOVSImpl(unsigned AccessSize,
 class X86AddressSanitizer64 : public X86AddressSanitizer {
 public:
   //static const long kShadowOffset = 0x7fff8000;
-  static const long kShadowOffset = 0x200000000000;
+  static const long kShadowOffset = 0x2000'0000'0000;
 
   X86AddressSanitizer64(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
