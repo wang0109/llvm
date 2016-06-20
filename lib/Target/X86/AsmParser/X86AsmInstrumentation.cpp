@@ -752,8 +752,8 @@ void X86AddressSanitizer32::InstrumentMOVSImpl(unsigned AccessSize,
 class X86AddressSanitizer64 : public X86AddressSanitizer {
 public:
   //static const long kShadowOffset = 0x7fff8000;
-  //FIXME: testing 2 TB again
-  static const long kShadowOffset = 0x20000000000;  // 2TB.
+  //FIXME: testing 32 TB again, this was almost ok on small test.
+  static const long kShadowOffset = 0x200000000000;  // 32TB.
 
   X86AddressSanitizer64(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
