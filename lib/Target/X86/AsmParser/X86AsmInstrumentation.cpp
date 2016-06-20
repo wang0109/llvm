@@ -494,6 +494,7 @@ X86AddressSanitizer::AddDisplacement(X86Operand &Op, int64_t Displacement,
 class X86AddressSanitizer32 : public X86AddressSanitizer {
 public:
   static const long kShadowOffset = 0x20000000;
+  __debugbreak();
 
   X86AddressSanitizer32(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
@@ -754,6 +755,7 @@ public:
   //static const long kShadowOffset = 0x7fff8000;
   //FIXME: testing 32 TB again, this was almost ok on small test.
   static const long long kShadowOffset = 0x200000000000;  // 32TB.
+  __debugbreak();
 
   X86AddressSanitizer64(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
