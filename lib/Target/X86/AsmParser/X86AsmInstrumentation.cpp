@@ -1073,6 +1073,8 @@ CreateX86AsmInstrumentation(const MCTargetOptions &MCOptions,
     if (STI->getFeatureBits()[X86::Mode64Bit] != 0)
       return new X86AddressSanitizer64(STI);
   }
+  // FIXME(wwchrome): Debug only.
+  __debugbreak();
   return new X86AsmInstrumentation(STI);
 }
 
