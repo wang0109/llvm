@@ -494,7 +494,6 @@ X86AddressSanitizer::AddDisplacement(X86Operand &Op, int64_t Displacement,
 class X86AddressSanitizer32 : public X86AddressSanitizer {
 public:
   static const long kShadowOffset = 0x20000000;
-  __debugbreak();
 
   X86AddressSanitizer32(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
@@ -637,6 +636,9 @@ void X86AddressSanitizer32::InstrumentMemOperandSmall(
     MCInst Inst;
     Inst.setOpcode(X86::MOV8rm);
     Inst.addOperand(MCOperand::createReg(ShadowRegI8));
+
+    //FIXME: test in 32bit
+    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI32, 0, 1,
@@ -714,6 +716,8 @@ void X86AddressSanitizer32::InstrumentMemOperandLarge(
       Inst.setOpcode(X86::CMP16mi);
       break;
     }
+    // FIXME: test 32 bit
+    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI32, 0, 1,
@@ -755,7 +759,6 @@ public:
   //static const long kShadowOffset = 0x7fff8000;
   //FIXME: testing 32 TB again, this was almost ok on small test.
   static const long long kShadowOffset = 0x200000000000;  // 32TB.
-  __debugbreak();
 
   X86AddressSanitizer64(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
@@ -912,6 +915,8 @@ void X86AddressSanitizer64::InstrumentMemOperandSmall(
     MCInst Inst;
     Inst.setOpcode(X86::MOV8rm);
     Inst.addOperand(MCOperand::createReg(ShadowRegI8));
+    // FIXME: debug only.
+    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI64, 0, 1,
@@ -989,6 +994,8 @@ void X86AddressSanitizer64::InstrumentMemOperandLarge(
       Inst.setOpcode(X86::CMP16mi);
       break;
     }
+    // FIXME: debug only, 64bit.
+    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI64, 0, 1,
@@ -1067,6 +1074,8 @@ X86AsmInstrumentation *
 CreateX86AsmInstrumentation(const MCTargetOptions &MCOptions,
                             const MCContext &Ctx, const MCSubtargetInfo *&STI) {
   Triple T(STI->getTargetTriple());
+  // FIXME(wwchrome): Debug only.
+  __debugbreak();
   const bool hasCompilerRTSupport = T.isOSLinux();
   if (ClAsanInstrumentAssembly && hasCompilerRTSupport &&
       MCOptions.SanitizeAddress) {
