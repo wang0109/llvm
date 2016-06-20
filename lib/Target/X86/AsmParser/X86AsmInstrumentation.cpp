@@ -753,7 +753,7 @@ class X86AddressSanitizer64 : public X86AddressSanitizer {
 public:
   //static const long kShadowOffset = 0x7fff8000;
   //FIXME: testing 32 TB again, this was almost ok on small test.
-  static const long kShadowOffset = 0x200000000000;  // 32TB.
+  static const long long kShadowOffset = 0x200000000000;  // 32TB.
 
   X86AddressSanitizer64(const MCSubtargetInfo *&STI)
       : X86AddressSanitizer(STI) {}
