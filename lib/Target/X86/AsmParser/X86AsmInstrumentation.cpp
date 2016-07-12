@@ -636,9 +636,6 @@ void X86AddressSanitizer32::InstrumentMemOperandSmall(
     MCInst Inst;
     Inst.setOpcode(X86::MOV8rm);
     Inst.addOperand(MCOperand::createReg(ShadowRegI8));
-
-    //FIXME: test in 32bit
-    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI32, 0, 1,
@@ -716,8 +713,6 @@ void X86AddressSanitizer32::InstrumentMemOperandLarge(
       Inst.setOpcode(X86::CMP16mi);
       break;
     }
-    // FIXME: test 32 bit
-    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI32, 0, 1,
@@ -915,8 +910,6 @@ void X86AddressSanitizer64::InstrumentMemOperandSmall(
     MCInst Inst;
     Inst.setOpcode(X86::MOV8rm);
     Inst.addOperand(MCOperand::createReg(ShadowRegI8));
-    // FIXME: debug only.
-    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI64, 0, 1,
@@ -994,8 +987,6 @@ void X86AddressSanitizer64::InstrumentMemOperandLarge(
       Inst.setOpcode(X86::CMP16mi);
       break;
     }
-    // FIXME: debug only, 64bit.
-    __debugbreak();
     const MCExpr *Disp = MCConstantExpr::create(kShadowOffset, Ctx);
     std::unique_ptr<X86Operand> Op(
         X86Operand::CreateMem(getPointerWidth(), 0, Disp, ShadowRegI64, 0, 1,
@@ -1074,8 +1065,6 @@ X86AsmInstrumentation *
 CreateX86AsmInstrumentation(const MCTargetOptions &MCOptions,
                             const MCContext &Ctx, const MCSubtargetInfo *&STI) {
   Triple T(STI->getTargetTriple());
-  // FIXME(wwchrome): Debug only.
-  __debugbreak();
   const bool hasCompilerRTSupport = T.isOSLinux();
   if (ClAsanInstrumentAssembly && hasCompilerRTSupport &&
       MCOptions.SanitizeAddress) {
@@ -1084,8 +1073,6 @@ CreateX86AsmInstrumentation(const MCTargetOptions &MCOptions,
     if (STI->getFeatureBits()[X86::Mode64Bit] != 0)
       return new X86AddressSanitizer64(STI);
   }
-  // FIXME(wwchrome): Debug only.
-  __debugbreak();
   return new X86AsmInstrumentation(STI);
 }
 
